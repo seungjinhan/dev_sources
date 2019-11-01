@@ -2,7 +2,8 @@
  - 로그파일 처리
  - DB백업
  - MailQueue 메일 전송
- 
+ <br>
+ <br>
 ## Source 설명 
 1. Mysql File로 백업
 ------------------------------------------------------------------------------------------------------------------------------------
@@ -19,6 +20,9 @@ def database_backup():
     os.system("mysqldump -u chunlab -pchunlabtest --max_allowed_packet=1024M --databases smilebiome > /home/chunlab/data/smilebiome_db_backup/smilebiome_"+now_date+".sql")
     logging.info('Complete DATABASE Backup...:' + now_date)
 ------------------------------------------------------------------------------------------------------------------------------------    
+
+<br>
+<br>
 
 2. LOG file 날짜폴더별로 저장처리
 ------------------------------------------------------------------------------------------------------------------------------------    
@@ -43,13 +47,15 @@ def run():
     path_admin_server = '/usr/local/tools/logs/admin_server'
     __log_file_move(path_admin_server)
 ------------------------------------------------------------------------------------------------------------------------------------    
-
+<br>
+<br>
 
 ## 모듈설치
-pip install schedule
-pip install requests
-pip install --upgrade git+https://github.com/seungjinhan/python_jimmy_util.git
-
+pip install schedule <br> 
+pip install requests <br>
+pip install --upgrade git+https://github.com/seungjinhan/python_jimmy_util.git<br>
+<br>
+<br>
 ## svn update 및 실행
 서버의 해당 폴더에 가서
 - cd /usr/local/tools/server/scheduler/scheduler/src
