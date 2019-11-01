@@ -1,6 +1,6 @@
 # Python
-## [django](/django)
-1. [sample_project](/django/sample_project)
+## django
+1. sample_project
 
-## [scheduler](/scheduler)
+## scheduler
  - module for scheduler
