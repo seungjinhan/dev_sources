@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans 
+			xmlns="http://www.springframework.org/schema/mvc"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xmlns:mvc="http://www.springframework.org/schema/mvc"
+			xmlns:beans="http://www.springframework.org/schema/beans"
+			xmlns:context="http://www.springframework.org/schema/context"
+			xmlns:aop="http://www.springframework.org/schema/aop" 
+			xmlns:tx="http://www.springframework.org/schema/tx"
+			xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+			xmlns:jpa="http://www.springframework.org/schema/data/jpa" 
+			xmlns:util="http://www.springframework.org/schema/util"
+			xmlns:jee="http://www.springframework.org/schema/jee"
+			xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+							http://www.springframework.org/schema/mvc/spring-mvc.xsd
+							http://www.springframework.org/schema/beans 
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context 
+							http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/tx
+							http://www.springframework.org/schema/tx/spring-tx.xsd	
+							http://www.springframework.org/schema/aop 
+							http://www.springframework.org/schema/aop/spring-aop.xsd
+							http://www.springframework.org/schema/util 
+							http://www.springframework.org/schema/util/spring-util.xsd
+							http://www.springframework.org/schema/data/mongo
+							http://www.springframework.org/schema/data/mongo/spring-mongo.xsd						
+							http://www.springframework.org/schema/data/jpa 
+							http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+							http://www.springframework.org/schema/jee
+							http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+	<jpa:repositories base-package="com.chunlab" entity-manager-factory-ref="entityManagerFactory" />
+
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/SBDS" expected-type="javax.sql.DataSource" resource-ref="true"/>
+
+	<!-- 트랜잭션 관리자등록 -->
+	<beans:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<beans:property name="entityManagerFactory" ref="entityManagerFactory" />
+	</beans:bean>
+
+	<beans:bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+	<!-- 하이버네이트의 SessionFactory 에 상응하는 jpa의 EntityManagerFactory 등록 -->
+	<beans:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="packagesToScan" value="com.chunlab.app" />
+		<beans:property name="jpaVendorAdapter">
+			<beans:bean	class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</beans:property>
+		<beans:property name="jpaProperties">
+			<beans:props>
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</beans:prop> <!-- 방언 -->
+				<!-- <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop> -->
+				<beans:prop key="hibernate.connection.pool_size">9999</beans:prop>
+				<beans:prop key="hibernate.format_sql">true</beans:prop> <!-- SQL 정렬해서 보기 -->
+				<beans:prop key="hibernate.use_sql_comments">true</beans:prop> <!-- SQL 컴맨트 보기 -->
+				<beans:prop key="hibernate.connection.shutdown">true</beans:prop> <!-- hsql에 있는 마지막 연결이 끊어지면 데이터베이스 shutdown 하는 플래그 -->
+				<beans:prop key="hibernate.show_sql">true</beans:prop> <!-- SQL 출력 -->
+				<beans:prop key="hibernate.new_generator_mappings">true</beans:prop> <!-- 새버전의 ID생성 옵션 -->
+				<beans:prop key="hibernate.hbm2ddl.auto">update</beans:prop> <!-- DDL 자동 생성 -->
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/> 
+	
+	<context:annotation-config/>
+	
+</beans:beans>
