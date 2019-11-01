@@ -1,0 +1,43 @@
+1. Centos Server에 아나콘다 설치 및 처음 세팅
+
+sudo wget https://repo.anaconda.com/archive/Anaconda3-2019.07-Linux-x86_64.sh
+bash Anaconda3-2019.07-Linux-x86_64.sh -u
+source ~/.bashrc
+
+conda update conda
+
+conda create --name chunlab python=3.7
+
+(base) [centos@DB_slave python]$ conda activate chunlab
+(chunlab) [centos@DB_slave python]$ 
+
+위치: /usr/local/tools/server/support_server
+
+SVN Checkout (최초 한번만 실행하면됨)
+ # svn co svn://localhost/svnRepo/support_server
+
+LOG폴더: /usr/local/tools/server/support_server/support_server/logs
+
+서버실행:/usr/local/tools/server/support_server/support_server/src/start_server.sh 
+
+서버 실행전에 svn 업데이트
+ # svn update
+
+서버 실행전에 프로세스 확인
+ # ps -ef|grep python
+
+pip install django
+pip install djangorestframework
+pip install --upgrade git+git://github.com/seungjinhan/python_pytilhan_package.git
+pip install django-split-settings
+pip install mysqlclient
+ 
+ db에서 model 만들기
+ python .\manage.py inspectdb
+ 
+ 
+ 맥북에 MYSQLCLIENT 설치 안될때
+ brew install openssl
+LDFLAGS=-L/usr/local/opt/openssl/lib pip install mysqlclient
+
+ 
