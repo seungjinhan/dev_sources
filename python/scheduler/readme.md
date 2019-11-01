@@ -1,11 +1,11 @@
-# 스케쥴러 프로그램
- - 로그파일 처리
- - DB백업
- - MailQueue 메일 전송
+# 스케쥴러 프로그램<br>
+ - 로그파일 처리<br>
+ - DB백업<br>
+ - MailQueue 메일 전송<br>
  <br>
  <br>
-## Source 설명 
-1. Mysql File로 백업
+## Source 설명 <br>
+1. Mysql File로 백업<br>
 ------------------------------------------------------------------------------------------------------------------------------------
 import time
 import os
@@ -24,9 +24,9 @@ def database_backup():
 <br>
 <br>
 
-2. LOG file 날짜폴더별로 저장처리
-------------------------------------------------------------------------------------------------------------------------------------    
-## 로그파일 이동처리
+2. LOG file 날짜폴더별로 저장처리<br>
+------------------------------------------------------------------------------------------------------------------------------------    <br>
+## 로그파일 이동처리<br>
 def __log_file_move( path):
 
     year = date_util.year()
@@ -50,18 +50,18 @@ def run():
 <br>
 <br>
 
-## 모듈설치
+## 모듈설치<br>
 pip install schedule <br> 
 pip install requests <br>
 pip install --upgrade git+https://github.com/seungjinhan/python_jimmy_util.git<br>
 <br>
 <br>
-## svn update 및 실행
-서버의 해당 폴더에 가서
-- cd /usr/local/tools/server/scheduler/scheduler/src
-- svn update
-- ps -ef|grep python
-- kill
-- nohup python run_Scheduler.py &
-- ps -ef|grep python
-- tail -f nohup
+## svn update 및 실행<br>
+서버의 해당 폴더에 가서<br>
+- cd /usr/local/tools/server/scheduler/scheduler/src<br>
+- svn update<br>
+- ps -ef|grep python<br>
+- kill<br>
+- nohup python run_Scheduler.py &<br>
+- ps -ef|grep python<br>
+- tail -f nohup<br>
