@@ -1,0 +1,12 @@
+pip install schedule
+pip install requests
+pip install --upgrade git+https://github.com/seungjinhan/python_jimmy_util.git
+
+서버의 해당 폴더에 가서
+- cd /usr/local/tools/server/scheduler/scheduler/src
+- svn update
+- ps -ef|grep python
+- kill
+- nohup python run_Scheduler.py &
+- ps -ef|grep python
+- tail -f nohup
