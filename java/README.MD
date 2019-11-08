@@ -9,4 +9,4 @@
 8. [sprint_setting](https://github.com/seungjinhan/dev_sources/tree/master/java/spring_setting) - spring 세팅 코드
 9. [token](https://github.com/seungjinhan/dev_sources/tree/master/java/token) - Access, Refresh Token을 구현
 10. [utils](https://github.com/seungjinhan/dev_sources/tree/master/java/utils) - java개발에서 사용하는 Util packages
-11. [sprint scheduler](https://github.com/seungjinhan/dev_sources/tree/master/java/spring_scheduler_setting) - Spring에서 사용할 수 있는 스케쥴러 샘플
+11. [spring scheduler](https://github.com/seungjinhan/dev_sources/tree/master/java/spring_scheduler_setting) - Spring에서 사용할 수 있는 스케쥴러 샘플
