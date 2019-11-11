@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class Sample01 {
 
 	
-	// 5초마다 수행됨
+	// 5초마다 수행되
 	@Async
 	@Scheduled( fixedRate = 5000)
 	public void sendMail() {
