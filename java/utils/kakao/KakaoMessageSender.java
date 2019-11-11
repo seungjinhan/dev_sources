@@ -44,7 +44,7 @@ public class KakaoMessageSender {
 	private String makeKakaoBody(String msg, String tmpId, String phone, String buttonTitle, String pcLink, String mobileLink) {
 		
 		JSONObject obj= new JSONObject();
-		obj.put("userId", "");
+		obj.put("userId", "smilebiome");
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
 		obj.put("phn", phone);
@@ -61,7 +61,7 @@ public class KakaoMessageSender {
 		obj.put("smsKind","L"); // SMS/LMS 구분(SMS: S, LMS: L)
 		obj.put("msgSms",msg);  // LMS 전환발송을 위한 메시지
 		obj.put("smsSender",""); // SMS 전환발송 시 발신번호
-		obj.put("smsLmsTit",""); // LMS 발송 제목
+		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
 		JSONArray array = new JSONArray();
@@ -80,7 +80,7 @@ public class KakaoMessageSender {
 	private String makeKakaoBodyOnlyForMobileLink(String msg, String tmpId, String phone, String buttonTitle, String mobileLink) {
 		
 		JSONObject obj= new JSONObject();
-		obj.put("userId", "");
+		obj.put("userId", "smilebiome");
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
 		obj.put("phn", phone);
@@ -96,7 +96,7 @@ public class KakaoMessageSender {
 		obj.put("smsKind","L"); // SMS/LMS 구분(SMS: S, LMS: L)
 		obj.put("msgSms",msg);  // LMS 전환발송을 위한 메시지
 		obj.put("smsSender",""); // SMS 전환발송 시 발신번호
-		obj.put("smsLmsTit",""); // LMS 발송 제목
+		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
 		JSONArray array = new JSONArray();
@@ -108,7 +108,7 @@ public class KakaoMessageSender {
 	private String makeKakaoBodyNoLink(String msg, String tmpId, String phone) {
 		
 		JSONObject obj= new JSONObject();
-		obj.put("userId", "");
+		obj.put("userId", "smilebiome");
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
 		obj.put("phn", phone);
@@ -118,7 +118,7 @@ public class KakaoMessageSender {
 		obj.put("smsKind","L"); // SMS/LMS 구분(SMS: S, LMS: L)
 		obj.put("msgSms",msg);  // LMS 전환발송을 위한 메시지
 		obj.put("smsSender",""); // SMS 전환발송 시 발신번호
-		obj.put("smsLmsTit",""); // LMS 발송 제목
+		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
 		JSONArray array = new JSONArray();
@@ -184,7 +184,7 @@ public class KakaoMessageSender {
 	private String makeKakaoBody(String msg, String tmpId, String phone) {
 		
 		JSONObject obj= new JSONObject();
-		obj.put("userId", "");
+		obj.put("userId", "smilebiome");
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
 		obj.put("phn", phone);
@@ -194,7 +194,7 @@ public class KakaoMessageSender {
 		obj.put("smsKind","L"); // SMS/LMS 구분(SMS: S, LMS: L)
 		obj.put("msgSms",msg);  // LMS 전환발송을 위한 메시지
 		obj.put("smsSender",""); // SMS 전환발송 시 발신번호
-		obj.put("smsLmsTit",""); // LMS 발송 제목
+		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
 		JSONArray array = new JSONArray();

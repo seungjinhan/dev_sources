@@ -12,7 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.chunlab.app.system.enums.EnumExceptionOthers;
 import com.chunlab.app.system.exception.ExceptionBase;
@@ -885,9 +884,29 @@ public class DateUtil {
 		return Integer.valueOf(result);
 	}
 	
+	/**
+	 * 
+	  * @Method Name : dateDiffence
+	  * @작성일 : 2019. 11. 6.
+	  * @작성자 : deepplin
+	  * @변경이력 : 
+	  * @Method 설명 : 두 날짜간 차이
+	  * @param date1
+	  * @param date2
+	  * @return
+	  * @throws ExceptionBase
+	 */
+	public static Integer dateDiffence( String date1, String date2) throws ExceptionBase {
+	
+		LocalDate date01 = getLocalDateType( date1);
+		LocalDate date02 = getLocalDateType( date2);
+		return Period.between(date01, date02).getDays();
+		
+	}
+	
 	public static void main(String[] args) throws ParseException, ExceptionBase {
 
-		System.out.println( addDaysFromToday(3));
+		System.out.println( dateDiffence("20191102", "20191101"));
 		
 //		System.out.println( checkTimeOver("201910301112", 24));
 		

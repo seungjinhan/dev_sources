@@ -31,11 +31,6 @@ public class SQLUtil {
 		return stringList;
 	}
 	
-	public static void main( String[] args) {
-		
-		System.out.println( makeWhereInString("e3ed,344,dd,3"));
-	}
-	
 	/**
 	 * DB에 상태값 변경에 따른 히스토리 데이터 추가하기
 	 * 
