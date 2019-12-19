@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
-import org.json.JSONArray;
+import com.chunlab.admin.system.json.JsonList;
 
 import com.chunlab.app.system.exception.ExceptionBase;
 import com.chunlab.app.utils.enums.EnumExceptionObject;
@@ -270,19 +270,19 @@ public class ListUtil {
 	}
 
 	/**
-	 * List를 JSONArray 로 변환
+	 * List를 JsonList 로 변환
 	 * @param list
 	 * @return
 	 * @throws ExceptionBase 
 	 */
-	public static JSONArray listToJSONArray( List<Object> list) throws ExceptionBase {
+	public static JsonList listToJsonList( List<Object> list) throws ExceptionBase {
 		
 		if( list == null) {
 			
 			throw new ExceptionBase( EnumExceptionObject.OBJECT_NULL);
 		}
 		
-		JSONArray result = new JSONArray();
+		JsonList result = new JsonList();
 		
 		for (int i = 0; i < list.size(); i++) {
 			
@@ -293,11 +293,11 @@ public class ListUtil {
 	}
 	
 	/**
-	 * String을 JSONArray로 변환
+	 * String을 JsonList로 변환
 	 */
-	public static JSONArray convertJSONArrayFromString ( String str, String del) {
+	public static JsonList convertJsonListFromString ( String str, String del) {
 
-		JSONArray result = new JSONArray();
+		JsonList result = new JsonList();
 
 		StringTokenizer st = new StringTokenizer(str, del);
 		while (st.hasMoreTokens()){

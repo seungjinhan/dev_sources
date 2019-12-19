@@ -21,7 +21,7 @@ public class MathUtil{
 	  * @param num
 	  * @return
 	 */
-	public static int getIntgerDigit( Integer num) {
+	public static int getIntgerDigit( int num) {
 		
 		return (int)(Math.log10(num)+1);
 	}

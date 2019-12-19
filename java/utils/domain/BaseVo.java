@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 
 import org.json.JSONException;
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonMap;
 
 import com.chunlab.app.system.enums.EnumExceptionOthers;
 import com.chunlab.app.system.exception.ExceptionBase;
@@ -28,9 +28,9 @@ public class BaseVo implements Serializable {
 	 * @throws ExceptionBase 
 	 * @throws Exception
 	 */
-	public JSONObject getJsonObject( ) throws ExceptionBase{
+	public JsonMap getJsonObject( ) throws ExceptionBase{
 		
-		JSONObject j = new JSONObject();
+		JsonMap j = new JsonMap();
 		
 		Class cls = this.getClass();
 		Field[] fields = cls.getDeclaredFields();

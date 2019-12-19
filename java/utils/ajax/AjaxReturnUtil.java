@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -150,11 +150,11 @@ public class AjaxReturnUtil {
 	/**
 	 * 2019.05.31
 	 * 
-	 * JSONObject 처리
+	 * JsonMap 처리
 	 * @param datacode
 	 * @return
 	 */
-	public static Map<String, Object> makeSuccess ( JSONObject datacode) {
+	public static Map<String, Object> makeSuccess ( JsonMap datacode) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put(AjaxConstants.SUCCESS, true);

@@ -1,7 +1,7 @@
 package com.chunlab.app.utils.database;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonList;
+import com.chunlab.admin.system.json.JsonMap;
 
 import com.chunlab.app.system.exception.ExceptionBase;
 
@@ -44,18 +44,18 @@ public class SQLUtil {
 	public static String addStatusHistory( String nowData, String preStatus, String postStatus, String email, String date) {
 		
 		
-		JSONArray logList = null;
+		JsonList logList = null;
 		
 		if( nowData == null || nowData.trim().length() == 0) {
 			
-			logList = new JSONArray();
+			logList = new JsonList();
 		}
 		else {
 			
-			logList = new JSONArray( nowData);
+			logList = new JsonList( nowData);
 		}
 		
-		JSONObject log = new JSONObject();
+		JsonMap log = new JsonMap();
 		log.put("email", email);
 		log.put("date", date);
 		log.put("pre_status", preStatus);

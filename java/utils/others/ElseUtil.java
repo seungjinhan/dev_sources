@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonList;
+import com.chunlab.admin.system.json.JsonMap;
 
 import com.chunlab.app.auth_code.EnumCodeType;
 import com.chunlab.app.system.SystemPropertiesInfo;
@@ -33,7 +33,7 @@ public class ElseUtil {
 	 * @throws ExceptionOthers 
 	 * @throws ExceptionCustomRun 
 	 */
-	public static String makeRandomCharWithin30Digit ( Integer digit) throws ExceptionBase {
+	public static String makeRandomCharWithin30Digit ( int digit) throws ExceptionBase {
 
 		if( digit > 31) {
 			
@@ -175,18 +175,18 @@ public class ElseUtil {
 	public static String addStatusHistory( String nowData, String preStatus, String postStatus, String email, String date) {
 		
 		
-		JSONArray logList = null;
+		JsonList logList = null;
 		
 		if( nowData == null || nowData.trim().length() == 0) {
 			
-			logList = new JSONArray();
+			logList = new JsonList();
 		}
 		else {
 			
-			logList = new JSONArray( nowData);
+			logList = new JsonList( nowData);
 		}
 		
-		JSONObject log = new JSONObject();
+		JsonMap log = new JsonMap();
 		log.put("email", email);
 		log.put("date", date);
 		log.put("pre_status", preStatus);
@@ -211,18 +211,18 @@ public class ElseUtil {
 	public static String addStopStatusHistory( String nowData, String preStatus, String postStatus, String email, String date, String reason, String comment) {
 		
 		
-		JSONArray logList = null;
+		JsonList logList = null;
 		
 		if( nowData == null || nowData.trim().length() == 0) {
 			
-			logList = new JSONArray();
+			logList = new JsonList();
 		}
 		else {
 			
-			logList = new JSONArray( nowData);
+			logList = new JsonList( nowData);
 		}
 		
-		JSONObject log = new JSONObject();
+		JsonMap log = new JsonMap();
 		log.put("email", email);
 		log.put("date", date);
 		log.put("pre_status", preStatus);
@@ -240,7 +240,7 @@ public class ElseUtil {
 	 * @param range
 	 * @return
 	 */
-	public static Integer getRandomNumber( Integer range) {
+	public static int getRandomNumber( int range) {
 		
  		List<Integer> temp = Arrays.asList( new Integer[]{1,2,3,4,5,6,7,8,9});
 		Collections.shuffle( temp);		

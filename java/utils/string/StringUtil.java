@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.json.JSONArray;
+import com.chunlab.admin.system.json.JsonList;
 
 import com.chunlab.app.system.enums.EnumYN;
 import com.chunlab.app.system.exception.ExceptionBase;
@@ -204,7 +204,7 @@ public class StringUtil {
 	 * @return
 	 * @throws ExceptionBase
 	 */
-	public static EnumSringSizeCompare checkStringSizeCompare ( String str, Integer size, EnumSringSizeCompare standard) throws ExceptionBase {
+	public static EnumSringSizeCompare checkStringSizeCompare ( String str, int size, EnumSringSizeCompare standard) throws ExceptionBase {
 
 		if ( str == null){
 
@@ -271,21 +271,21 @@ public class StringUtil {
 	
 
 	/**
-	 * String -> JSONArray
+	 * String -> JsonList
 	 * 
 	 * @param str
 	 * @param del
 	 * @return
 	 * @throws ExceptionBase 
 	 */
-	public static JSONArray stringToJSONArray ( String str, String del) throws ExceptionBase {
+	public static JsonList stringToJsonList ( String str, String del) throws ExceptionBase {
 
 		if( str == null || del == null ) {
 			
 			throw new ExceptionBase( EnumExceptionString.STRING_NULL);
 		}
 
-		JSONArray result = new JSONArray();
+		JsonList result = new JsonList();
 
 		StringTokenizer st = new StringTokenizer(str, del);
 		while (st.hasMoreTokens()){

@@ -3,7 +3,7 @@ package com.chunlab.app.utils.network;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -36,7 +36,7 @@ public class OutServerCall {
 //		return result;
 //	}
 //	
-//	public String call( EnumOutUrlBase url, EnumAPIMethod method, JSONObject param) throws IOException, ExceptionBase{
+//	public String call( EnumOutUrlBase url, EnumAPIMethod method, JsonMap param) throws IOException, ExceptionBase{
 //		
 //		String result = null;
 //		
@@ -54,7 +54,7 @@ public class OutServerCall {
 		return result;
 	}
 	
-	public String call( String url, EnumAPIMethod method, JSONObject param) throws ExceptionBase{
+	public String call( String url, EnumAPIMethod method, JsonMap param) throws ExceptionBase{
 		
 		String result = null;
 		
@@ -63,7 +63,7 @@ public class OutServerCall {
 		return result;
 	}
 	
-	public String callWithHeader( String url, EnumAPIMethod method, JSONObject param, HttpHeaders headers) throws ExceptionBase{
+	public String callWithHeader( String url, EnumAPIMethod method, JsonMap param, HttpHeaders headers) throws ExceptionBase{
 		
 		String result = null;
 		

@@ -7,7 +7,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonMap;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.converter.FormHttpMessageConverter;
@@ -44,7 +44,7 @@ class OutServerUtil {
 	 * @throws IOException
 	 * @throws ExceptionBase
 	 */
-	public static String call( HttpServletRequest request, EnumAPIMethod method, String url, JSONObject body){
+	public static String call( HttpServletRequest request, EnumAPIMethod method, String url, JsonMap body){
 		
 		LogUtil.logInfo("#####################################################################");
 		LogUtil.logInfo("URL : " + url);
@@ -142,7 +142,7 @@ class OutServerUtil {
 	 * @throws IOException
 	 * @throws ExceptionBase
 	 */
-	public static String callWithHeader( HttpServletRequest request, EnumAPIMethod method, String url, JSONObject body, HttpHeaders headers) throws ExceptionBase{
+	public static String callWithHeader( HttpServletRequest request, EnumAPIMethod method, String url, JsonMap body, HttpHeaders headers) throws ExceptionBase{
 		
 		String headerString = headers.toString();
 		LogUtil.logInfo("#####################################################################");

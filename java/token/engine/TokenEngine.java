@@ -3,7 +3,7 @@ package com.chunlab.app.token.engine;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,7 +134,7 @@ public class TokenEngine extends TokenEngingSupport {
         }
         token3 = new String( data,"UTF-8");
         
-//        JSONObject result = new JSONObject();
+//        JsonMap result = new JsonMap();
 //        
 //        result.put( MAP_KEY_CREATE, token1);
 //        result.put( MAP_KEY_DATA, token3.replace('(','{').replace(')','}'));
@@ -222,13 +222,13 @@ public class TokenEngine extends TokenEngingSupport {
 			// 만료일 가져오기
 			expire = makeAccessTokenExpire();
 			
-//	    	JSONObject obj = new JSONObject();
+//	    	JsonMap obj = new JsonMap();
 //	    	obj.put( MAP_KEY_CREATE, System.nanoTime());
 //	    	
 	    	TokenCoreData coreData = new TokenCoreData();
 	    	coreData.createDate = System.nanoTime();
 	    	
-	    	JSONObject data = new JSONObject();
+	    	JsonMap data = new JsonMap();
 	    	data.put( MAP_KEY_EMAIL, email);
 	    	
 	    	System.out.println("------------ makeAccessToken : token data ------------");
@@ -269,7 +269,7 @@ public class TokenEngine extends TokenEngingSupport {
     	
     	// 재생성을 원하는 access token에서 email을 꺼내서 새롭게 생성함
     	TokenCoreData accessTokenObject = decodingFromToken( token);
-    	String email = new JSONObject( accessTokenObject.data).getString( TokenEngine.MAP_KEY_EMAIL);
+    	String email = new JsonMap( accessTokenObject.data).getString( TokenEngine.MAP_KEY_EMAIL);
     	
     	// 재생성
     	TokenObjectInfo newTokenInfo = makeAccessToken(email);
@@ -330,10 +330,10 @@ public class TokenEngine extends TokenEngingSupport {
     		
     		expire = DateUtil.addDaysFromToday(REFRESH_TOKEN_EXPIRE);
     		
-//    		JSONObject obj = new JSONObject();
+//    		JsonMap obj = new JsonMap();
 //    		obj.put( MAP_KEY_CREATE, now);
     		
-    		JSONObject data = new JSONObject();
+    		JsonMap data = new JsonMap();
     		data.put( MAP_KEY_EMAIL, email);
     		
 //    		obj.put( MAP_KEY_DATA, data.toString());

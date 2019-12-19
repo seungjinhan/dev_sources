@@ -14,8 +14,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonList;
+import com.chunlab.admin.system.json.JsonMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,11 +90,11 @@ public class RequestWrapper {
 	
 		    if (body.startsWith("[")) {
 		    	
-		    	JSONArray ja_req_body = new JSONArray(body);
+		    	JsonList ja_req_body = new JsonList(body);
 		    	strReqBody = ja_req_body.toString();
 		    } else if (body.startsWith("{")) {
 		    	
-		    	JSONObject jo_req_body = new JSONObject(body);
+		    	JsonMap jo_req_body = new JsonMap(body);
 		    	strReqBody = jo_req_body.toString();
 		    }
 	
@@ -132,7 +132,7 @@ public class RequestWrapper {
 	
 		Map<String, List<String>> map_header = connection.getHeaderFields();
 	
-		JSONObject jo_res_header = new JSONObject();
+		JsonMap jo_res_header = new JsonMap();
 		for (String key : map_header.keySet()) {
 	
 		    if (key != null) {

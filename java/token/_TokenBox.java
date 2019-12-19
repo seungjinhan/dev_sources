@@ -58,13 +58,13 @@ public class _TokenBox {
 //	 * @return
 //	 * @throws ExceptionBase
 //	 */
-//	public JSONObject decodeAccessToken( String accessToken) throws ExceptionBase {
+//	public JsonMap decodeAccessToken( String accessToken) throws ExceptionBase {
 //		
 //		LOG.info("Access Token Decoding START :" + accessToken );
 //		
 //		if( this.checkAccessTokenExpire(accessToken) == true) {
 //			
-//			JSONObject tokenJson = TokenEngine.decodingFromToken(accessToken);
+//			JsonMap tokenJson = TokenEngine.decodingFromToken(accessToken);
 //			
 //			LOG.info("Access Token Decoding END " + tokenJson);
 //			
@@ -195,11 +195,11 @@ public class _TokenBox {
 //
 //		LOG.info("Access Token 생성 START :" + token );
 //		
-//		JSONObject data = TokenEngine.decodingFromToken(token);
+//		JsonMap data = TokenEngine.decodingFromToken(token);
 //		
 //		LOG.info("decoding data :" + data.toString() );
 //		
-//		String email =  new JSONObject(data.getString(TokenEngine.MAP_KEY_DATA)).getString( TokenEngine.MAP_KEY_EMAIL);
+//		String email =  new JsonMap(data.getString(TokenEngine.MAP_KEY_DATA)).getString( TokenEngine.MAP_KEY_EMAIL);
 //		LOG.info("email :" + email);
 //		
 //		/////////////////////////////////////////////////////////////
@@ -244,9 +244,9 @@ public class _TokenBox {
 //	public String getEmailFromAccessToken( String token) throws ExceptionBase {
 //		
 //		LOG.info("Access Token 에서 Email 가져오기 START : " + token );
-//		JSONObject tokenJson = this.decodeAccessToken(token);
+//		JsonMap tokenJson = this.decodeAccessToken(token);
 //		LOG.info("dcoding data : " + tokenJson );
-//		String email =new JSONObject( tokenJson.getString( TokenEngine.MAP_KEY_DATA)).getString( TokenEngine.MAP_KEY_EMAIL); 
+//		String email =new JsonMap( tokenJson.getString( TokenEngine.MAP_KEY_DATA)).getString( TokenEngine.MAP_KEY_EMAIL); 
 //		LOG.info("Access Token 에서 Email 가져오기 END : " + email );
 //		return email;
 //	}
@@ -255,9 +255,9 @@ public class _TokenBox {
 //	 * AccessTokenList
 //	 * @return
 //	 */
-//	public JSONArray getAccessTokenMapKeyList() {
+//	public JsonList getAccessTokenMapKeyList() {
 //		
-//		JSONArray accessKeyList = new JSONArray();
+//		JsonList accessKeyList = new JsonList();
 //		
 //		Set<String> accessTokenSet = this.accessTokenMap.keySet();
 //		for (String key : accessTokenSet) {

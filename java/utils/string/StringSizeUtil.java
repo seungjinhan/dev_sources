@@ -48,7 +48,7 @@ public class StringSizeUtil {
 	 * @return
 	 * @throws ExceptionBaseNull
 	 */
-	public static EnumSringSizeCompare checkStringSize ( String string, Integer size) throws ExceptionBase {
+	public static EnumSringSizeCompare checkStringSize ( String string, int size) throws ExceptionBase {
 
 		return StringUtil.checkStringSizeCompare(string, size, EnumSringSizeCompare.BIG);
 	}

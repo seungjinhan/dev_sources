@@ -715,7 +715,7 @@ public class DateUtil {
 	 * @return
 	 * @throws ParseException 
 	 */
-	public static String addMiniutesFromNow( EnumDateType dateType, Integer minutes ) throws ParseException {
+	public static String addMiniutesFromNow( EnumDateType dateType, int minutes ) throws ParseException {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat(dateType.getType());
 		Date today = dateFormat.parse( now(dateType));
@@ -740,7 +740,7 @@ public class DateUtil {
 	  * @return
 	  * @throws ParseException
 	 */
-	public static Long addDaysFromToday( Integer days ) throws ParseException {
+	public static Long addDaysFromToday( int days ) throws ParseException {
 		
 		LocalDate now = LocalDate.now();
 		LocalDate nowPlus = now.plusDays( days);
@@ -856,7 +856,7 @@ public class DateUtil {
 	 * @param today
 	 * @return
 	 */
-	public static Integer compareDateWithToday( Integer compareDate ) {
+	public static int compareDateWithToday( int compareDate ) {
 		
 		Integer today = Integer.parseInt(now( EnumDateType.YYYYMMDD ));
 		Integer result = compareDate - today;
@@ -871,7 +871,7 @@ public class DateUtil {
 	 * @return
 	 * @throws ParseException 
 	 */
-	public static Integer calcDateBasedOnToday( Integer calcDay ) throws ParseException {
+	public static int calcDateBasedOnToday( int calcDay ) throws ParseException {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date today = dateFormat.parse(now(EnumDateType.YYYYMMDD));
@@ -896,7 +896,7 @@ public class DateUtil {
 	  * @return
 	  * @throws ExceptionBase
 	 */
-	public static Integer dateDiffence( String date1, String date2) throws ExceptionBase {
+	public static int dateDiffence( String date1, String date2) throws ExceptionBase {
 	
 		LocalDate date01 = getLocalDateType( date1);
 		LocalDate date02 = getLocalDateType( date2);

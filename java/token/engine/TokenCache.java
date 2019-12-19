@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class TokenCache {
 	 * @param accessToken
 	 * @return
 	 */
-	private Integer finterIndexByAccessToken( String accessToken){
+	private int finterIndexByAccessToken( String accessToken){
 		
 		for (int i = 0; i < tokenList.size(); i++) {
 			
@@ -396,9 +396,9 @@ public class TokenCache {
 		LOG.info("Access Token 에서 Email 가져오기 START : " + token );
 		TokenCoreData tokenJson = this.decodeAccessToken(token);
 		LOG.info("dcoding data : " + tokenJson );
-		//String email =new JSONObject( tokenJson.getString( TokenEngine.MAP_KEY_DATA)).getString( TokenEngine.MAP_KEY_EMAIL);
+		//String email =new JsonMap( tokenJson.getString( TokenEngine.MAP_KEY_DATA)).getString( TokenEngine.MAP_KEY_EMAIL);
 		
-		String email =new JSONObject( tokenJson.data).getString( TokenEngine.MAP_KEY_EMAIL);
+		String email =new JsonMap( tokenJson.data).getString( TokenEngine.MAP_KEY_EMAIL);
 		
 		LOG.info("Access Token 에서 Email 가져오기 END : " + email );
 		return email;

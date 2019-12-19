@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONArray;
+import com.chunlab.admin.system.json.JsonList;
 import org.json.JSONException;
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonMap;
 
 import com.chunlab.app.system.exception.ExceptionBase;
 import com.chunlab.app.utils.enums.EnumExceptionObject;
@@ -34,7 +34,7 @@ public class JSONUtil {
 	 * @return
 	 * @throws ExceptionBase 
 	 */
-	public static List<Object> jsonArryToList( JSONArray jsonArr) throws ExceptionBase{
+	public static List<Object> jsonArryToList( JsonList jsonArr) throws ExceptionBase{
 	
 		if( jsonArr == null) {
 			
@@ -52,7 +52,7 @@ public class JSONUtil {
 	}
 	
 	/**
-	 * JSONArray를 구분자로 나누는 스트링을 생성
+	 * JsonList를 구분자로 나누는 스트링을 생성
 	 * 
 	 * @param list
 	 * @param separator
@@ -60,7 +60,7 @@ public class JSONUtil {
 	 * @throws ExceptionBase 
 	 * @throws ExceptionBase 
 	 */
-	public static String jsonToString ( JSONArray list, String separator) throws ExceptionBase, ExceptionBase {
+	public static String jsonToString ( JsonList list, String separator) throws ExceptionBase, ExceptionBase {
 		
 		if ( list == null){
 			
@@ -93,7 +93,7 @@ public class JSONUtil {
 	 * @return
 	 * @throws ExceptionBase 
 	 */
-	public static Map<String, String> JsonObjectToMap( JSONObject jsonObj) throws ExceptionBase{
+	public static Map<String, String> JsonObjectToMap( JsonMap jsonObj) throws ExceptionBase{
 	
 		if( jsonObj == null) {
 			
@@ -130,7 +130,7 @@ public class JSONUtil {
 			throw new ExceptionBase( EnumExceptionObject.OBJECT_NULL);
 		}
 		
-		JSONObject jsonObj = new JSONObject(jsonStr);
+		JsonMap jsonObj = new JsonMap(jsonStr);
 		
 		Set<String> keys = jsonObj.keySet();
 		Map<String, String>  result = new HashMap<String, String>();
@@ -151,7 +151,7 @@ public class JSONUtil {
 	 * @return
 	 * @throws ExceptionBase 
 	 */
-	public static JSONObject mapToJSONObject ( Map<String, String> answer) throws ExceptionBase {
+	public static JsonMap mapToJsonMap ( Map<String, String> answer) throws ExceptionBase {
 
 		if( answer == null) {
 			
@@ -159,7 +159,7 @@ public class JSONUtil {
 		}
 		
 		Set<String> keys = answer.keySet();
-		JSONObject  result = new JSONObject();
+		JsonMap  result = new JsonMap();
 		
 		for (String key : keys) {
 			
@@ -181,7 +181,7 @@ public class JSONUtil {
 	 * @throws ExceptionBase 
 	 * @throws ExceptionBase 
 	 */
-	public static JSONArray sortJSONArrayByDouble ( JSONArray data, final String value, final EnumSortType sortType) throws ExceptionBase, ExceptionBase {
+	public static JsonList sortJsonListByDouble ( JsonList data, final String value, final EnumSortType sortType) throws ExceptionBase, ExceptionBase {
 
 		if( data == null) {
 			
@@ -193,18 +193,18 @@ public class JSONUtil {
 			throw new ExceptionBase( EnumExceptionString.STRING_NULL);
 		}
 		
-		JSONArray result = new JSONArray();
+		JsonList result = new JsonList();
 
-		List<JSONObject> jsonValues = new ArrayList<JSONObject>();
+		List<JsonMap> jsonValues = new ArrayList<JsonMap>();
 		for (int i = 0; i < data.length(); i++){
 
 			jsonValues.add(data.getJSONObject(i));
 		}
 
-		Collections.sort(jsonValues, new Comparator<JSONObject>() {
+		Collections.sort(jsonValues, new Comparator<JsonMap>() {
 
 			@Override
-			public int compare ( JSONObject a, JSONObject b) {
+			public int compare ( JsonMap a, JsonMap b) {
 
 				Double valA = null;
 				Double valB = null;

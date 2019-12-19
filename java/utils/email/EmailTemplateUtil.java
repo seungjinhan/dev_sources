@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Set;
 
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonMap;
 
 import com.chunlab.app.system.SystemPropertiesInfo;
 import com.chunlab.app.system.exception.ExceptionBase;
@@ -77,7 +77,7 @@ public class EmailTemplateUtil {
 		return result;
 	}
 	
-	public static String getContent ( EnumEmailTemplateInfo fileName, JSONObject paramJson) throws ExceptionBase {
+	public static String getContent ( EnumEmailTemplateInfo fileName, JsonMap paramJson) throws ExceptionBase {
 
 		String result = getContent(fileName);
 		

@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonList;
+import com.chunlab.admin.system.json.JsonMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +43,7 @@ public class KakaoMessageSender {
 	 */
 	private String makeKakaoBody(String msg, String tmpId, String phone, String buttonTitle, String pcLink, String mobileLink) {
 		
-		JSONObject obj= new JSONObject();
+		JsonMap obj= new JsonMap();
 		obj.put("userId", "smilebiome");
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
@@ -51,7 +51,7 @@ public class KakaoMessageSender {
 		obj.put("profile", "");
 		obj.put("message_type", "at");
 		
-		JSONObject buttonObj= new JSONObject();
+		JsonMap buttonObj= new JsonMap();
 		buttonObj.put("type", "WL");
 		buttonObj.put("name", buttonTitle);
 		buttonObj.put("url_pc", pcLink);
@@ -64,7 +64,7 @@ public class KakaoMessageSender {
 		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
-		JSONArray array = new JSONArray();
+		JsonList array = new JsonList();
 		array.put(obj);
 		
 		return array.toString();
@@ -79,7 +79,7 @@ public class KakaoMessageSender {
 	 */
 	private String makeKakaoBodyOnlyForMobileLink(String msg, String tmpId, String phone, String buttonTitle, String mobileLink) {
 		
-		JSONObject obj= new JSONObject();
+		JsonMap obj= new JsonMap();
 		obj.put("userId", "smilebiome");
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
@@ -87,7 +87,7 @@ public class KakaoMessageSender {
 		obj.put("profile", "");
 		obj.put("message_type", "at");
 		
-		JSONObject buttonObj= new JSONObject();
+		JsonMap buttonObj= new JsonMap();
 		buttonObj.put("type", "WL");
 		buttonObj.put("name", buttonTitle);
 		buttonObj.put("url_mobile", mobileLink);
@@ -99,7 +99,7 @@ public class KakaoMessageSender {
 		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
-		JSONArray array = new JSONArray();
+		JsonList array = new JsonList();
 		array.put(obj);
 		
 		return array.toString();
@@ -107,7 +107,7 @@ public class KakaoMessageSender {
 
 	private String makeKakaoBodyNoLink(String msg, String tmpId, String phone) {
 		
-		JSONObject obj= new JSONObject();
+		JsonMap obj= new JsonMap();
 		obj.put("userId", "smilebiome");
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
@@ -121,7 +121,7 @@ public class KakaoMessageSender {
 		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
-		JSONArray array = new JSONArray();
+		JsonList array = new JsonList();
 		array.put(obj);
 		
 		return array.toString();
@@ -183,7 +183,7 @@ public class KakaoMessageSender {
 	 */
 	private String makeKakaoBody(String msg, String tmpId, String phone) {
 		
-		JSONObject obj= new JSONObject();
+		JsonMap obj= new JsonMap();
 		obj.put("userId", "smilebiome");
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
@@ -197,7 +197,7 @@ public class KakaoMessageSender {
 		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
-		JSONArray array = new JSONArray();
+		JsonList array = new JsonList();
 		array.put(obj);
 		
 		return array.toString();
@@ -214,7 +214,7 @@ public class KakaoMessageSender {
 	 * @throws ExceptionBase
 	 * @throws IOException
 	 */
-	private JSONObject runMessage( String body) throws ExceptionBase, IOException{
+	private JsonMap runMessage( String body) throws ExceptionBase, IOException{
 		
 		String result = RequestWrapper.callOutsideAPI( request, EnumAPIMethod.POST, URL, body);
 		
@@ -222,12 +222,12 @@ public class KakaoMessageSender {
 			throw new ExceptionBase(EnumHttpResponseCode.HTTP_ELSE, result);
 		}
 		
-		JSONArray jsonArray = new JSONArray(result);
+		JsonList jsonArray = new JsonList(result);
 		if( jsonArray == null || jsonArray.length() == 0) {
 			
 			throw new ExceptionBase(EnumHttpResponseCode.HTTP_ELSE, result);
 		}
-		JSONObject tmpObj = jsonArray.getJSONObject(0);
+		JsonMap tmpObj = jsonArray.getJSONObject(0);
 		
 		return tmpObj;
 
@@ -242,10 +242,10 @@ public class KakaoMessageSender {
 	 * @throws IOException 
 	 * @throws ExceptionBase 
 	 */
-	public JSONObject sendKakao( EnumKakaoSendTemplate kakaoSendID, String phone) throws ExceptionBase, IOException {	
+	public JsonMap sendKakao( EnumKakaoSendTemplate kakaoSendID, String phone) throws ExceptionBase, IOException {	
 		
 		String body = this.makeKakaoBody( kakaoSendID, phone);
-		JSONObject result = this.runMessage(body);
+		JsonMap result = this.runMessage(body);
 		return result;
 	}
 	
@@ -259,10 +259,10 @@ public class KakaoMessageSender {
 	 * @throws ExceptionBase
 	 * @throws IOException
 	 */
-	public JSONObject sendKakao( EnumKakaoSendTemplate kakaoSendID, String code, String phone) throws ExceptionBase, IOException {	
+	public JsonMap sendKakao( EnumKakaoSendTemplate kakaoSendID, String code, String phone) throws ExceptionBase, IOException {	
 		
 		String body = this.makeKakaoBody( kakaoSendID, code, phone);
-		JSONObject result = this.runMessage(body);
+		JsonMap result = this.runMessage(body);
 		return result;
 	}
 	
@@ -277,10 +277,10 @@ public class KakaoMessageSender {
 	 * @throws ExceptionBase
 	 * @throws IOException
 	 */
-	public JSONObject sendKakaoMobileLink( EnumKakaoSendTemplate kakaoSendID, String code, String phone) throws ExceptionBase, IOException {	
+	public JsonMap sendKakaoMobileLink( EnumKakaoSendTemplate kakaoSendID, String code, String phone) throws ExceptionBase, IOException {	
 		
 		String body = this.makeKakaoBodyMobileLink( kakaoSendID, code, phone);
-		JSONObject result = this.runMessage(body);
+		JsonMap result = this.runMessage(body);
 		return result;
 	}
 	
@@ -293,10 +293,10 @@ public class KakaoMessageSender {
 	 * @throws ExceptionBase
 	 * @throws IOException
 	 */
-	public JSONObject sendKakaoNoLink( EnumKakaoSendTemplate kakaoSendID, String phone) throws ExceptionBase, IOException {	
+	public JsonMap sendKakaoNoLink( EnumKakaoSendTemplate kakaoSendID, String phone) throws ExceptionBase, IOException {	
 		
 		String body = this.makeKakaoBodyNoLink( kakaoSendID, phone);
-		JSONObject result = this.runMessage(body);
+		JsonMap result = this.runMessage(body);
 		return result;
 	}
 }

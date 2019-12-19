@@ -9,7 +9,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
-import org.json.JSONObject;
+import com.chunlab.admin.system.json.JsonMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +45,7 @@ public class CustomHttpServletRequestWapper extends HttpServletRequestWrapper {
 		
 		try {
 
-			JSONObject obj = new JSONObject(jsonBody);
+			JsonMap obj = new JsonMap(jsonBody);
 			Set<String> keys = obj.keySet();
 			for (String key : keys) {
 				
