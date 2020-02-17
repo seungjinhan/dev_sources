@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Set;
 
-import com.chunlab.admin.system.json.JsonMap;
+import com.chunlab.app.system.json.JsonMap;
 
 import com.chunlab.app.system.SystemPropertiesInfo;
 import com.chunlab.app.system.exception.ExceptionBase;

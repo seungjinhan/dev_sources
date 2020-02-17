@@ -5,13 +5,13 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.chunlab.admin.system.json.JsonMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.chunlab.app.system.exception.ExceptionBase;
+import com.chunlab.app.system.json.JsonMap;
 import com.chunlab.app.token.EnumExceptionToken;
 import com.chunlab.app.token.TokenService;
 import com.chunlab.app.token.TokenVo;
@@ -36,7 +36,7 @@ public class TokenCache {
 	private static Logger LOG = LoggerFactory.getLogger(TokenCache.class);
 	
 	@Autowired
-	private TokenService refreshTokenService;
+	private TokenService tokenService;
 	
 	///////////////////////////////////////////////////////////
 	///  토큰 정보를 저장하는 리스트
@@ -49,7 +49,7 @@ public class TokenCache {
 	 * @param accessToken
 	 * @return
 	 */
-	private int finterIndexByAccessToken( String accessToken){
+	private int finderIndexByAccessToken( String accessToken){
 		
 		for (int i = 0; i < tokenList.size(); i++) {
 			
@@ -115,7 +115,7 @@ public class TokenCache {
 	 */
 	public void initCache() throws ExceptionBase {
 		
-		tokenList = this.refreshTokenService.findAll();
+		tokenList = this.tokenService.findAll();
 		
 		for (TokenVo tokenVo : tokenList) {
 			
@@ -204,7 +204,7 @@ public class TokenCache {
 		
 		LOG.info("Access Token Expire 재 설정 START :" + accessToken );
 		
-		Integer index = this.finterIndexByAccessToken(accessToken);
+		Integer index = this.finderIndexByAccessToken(accessToken);
 		
 		tokenList.get(index).setAccessTokenExpire( String.valueOf( TokenEngine.makeAccessTokenExpire()));
 		
@@ -248,7 +248,7 @@ public class TokenCache {
 	 * @return
 	 * @throws ExceptionBase 
 	 */
-	public Long getAccessTokenExpire( String accessToken) throws ExceptionBase {
+	public long getAccessTokenExpire( String accessToken) throws ExceptionBase {
 		
 		TokenVo vo = this.getTokenInfoInCacheByAccessToken(accessToken);// filterForSingle((TokenVo t)->t.getAccessToken().contentEquals(accessToken));
 		
@@ -271,7 +271,7 @@ public class TokenCache {
 	  * @return
 	  * @throws ExceptionBase
 	 */
-	public Long getRefreshTokenExpire( String refreshToken) throws ExceptionBase {
+	public long getRefreshTokenExpire( String refreshToken) throws ExceptionBase {
 		
 		TokenVo vo = this.getTokenInfoInCacheByRefreshToken( refreshToken);
 		
@@ -444,6 +444,62 @@ public class TokenCache {
 	
 		return newVo;
 	}
+	
+	/**
+	 * Refresh Token 생성 (access token 불포함)
+	 * 
+	 * @param vo
+	 * @param email
+	 * @param appKey
+	 * @return
+	 * @throws ExceptionBase
+	 */
+	public TokenVo makeNewRefreshToken(TokenVo vo) throws ExceptionBase {
+		
+		LOG.info("get New Refresh / new Access token Start ");
+		
+		// AT는 캐쉬에서 가져오기
+//		String accessToken = getAccessTokenByEmail(vo.getEmail());
+		String refreshToken = TokenEngine.makeRefreshToken( vo.getEmail());
+		
+		TokenVo newVo = new TokenVo();
+		
+		newVo.setEmail( vo.getEmail());
+		newVo.setAppDeviceNo( vo.getAppDeviceNo());
+//		newVo.setAccessToken( accessToken);
+//		newVo.setAccessTokenExpire( String.valueOf( getAccessTokenExpire(accessToken)));
+		newVo.setRefreshToken(refreshToken);
+		newVo.setCreateDate( DateUtil.getDatabaseCreateDate());
+		
+		LOG.info("get New Refresh  / new Access token End : " + newVo.toString());
+		
+		return newVo;
+	}
+
+	/**
+	 * Access Token 생성 
+	 * 
+	 * @param vo
+	 * @param email
+	 * @param appKey
+	 * @return
+	 * @throws ExceptionBase
+	 */
+	public TokenVo makeNewAccessToken(TokenVo vo) throws ExceptionBase {
+		
+		LOG.info("get New Access token Start ");
+		
+		// AT는 캐쉬에서 가져오기
+		String accessToken = getAccessTokenByEmail(vo.getEmail());
+		
+		vo.setAccessToken( accessToken);
+		vo.setAccessTokenExpire( String.valueOf( getAccessTokenExpire(accessToken)));
+		
+		LOG.info("get New Refresh  / new Access token End : " + vo.toString());
+		
+		return vo;
+	}
+
 	
 	/**
 	 * 캐쉬에 앱키랑 정보를 저장 (기존 RefreshToken 정보는 리스트에서 우선 제거함)

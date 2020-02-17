@@ -1,7 +1,7 @@
 package com.chunlab.app.utils.database;
 
-import com.chunlab.admin.system.json.JsonList;
-import com.chunlab.admin.system.json.JsonMap;
+import com.chunlab.app.system.json.JsonList;
+import com.chunlab.app.system.json.JsonMap;
 
 import com.chunlab.app.system.exception.ExceptionBase;
 

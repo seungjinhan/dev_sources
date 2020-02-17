@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.stream.Collectors;
-
-import com.chunlab.admin.system.json.JsonList;
 
 import com.chunlab.app.system.exception.ExceptionBase;
+import com.chunlab.app.system.json.JsonList;
 import com.chunlab.app.utils.enums.EnumExceptionObject;
 import com.chunlab.app.utils.string.enums.EnumExceptionString;
 
@@ -29,7 +26,6 @@ import com.chunlab.app.utils.string.enums.EnumExceptionString;
  */
 public class ListUtil {
 
-	
 	/**
 	 * 앞리스트에서 두번째 리스트를 빼기 (중복된 항목을 제거)
 	 * 
@@ -169,7 +165,7 @@ public class ListUtil {
 	}
 	
 	/**
-	 * Long 타입의 리스트를 스트링으로 변환
+	 * long 타입의 리스트를 스트링으로 변환
 	 * 
 	 * @param list
 	 * @param seperator
@@ -191,7 +187,7 @@ public class ListUtil {
 		
 		StringBuilder sb = new StringBuilder();
 		int index = 1;
-		for ( Long kitNo : list){
+		for ( long kitNo : list){
 			
 			sb.append(kitNo);
 			if ( index < list.size()){
@@ -306,7 +302,7 @@ public class ListUtil {
 		}
 		return result;
 	}
-
+	
 	/**
 	 * 리스트 내림차순 정렬
 	 * @param data
@@ -419,4 +415,5 @@ public class ListUtil {
 		}
 
 	}
+	
 }

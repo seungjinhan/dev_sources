@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 import java.util.Date;
@@ -79,6 +80,14 @@ public class DateUtil {
 		return String.format("%02d", LocalDateTime.now().getSecond());
 	}
 	
+	/**
+	 * 시,분 2자리수 
+	 * @return
+	 */
+	private static String _nowHHmm( String seq) {
+		
+		return nowHH()+ seq + nowmm();
+	}
 	
 	/**
 	 * 날짜 가져오기 YYYYMMDD
@@ -102,6 +111,22 @@ public class DateUtil {
 		return nowYYYY() + seq + nowMM();
 	}
 
+	/**
+	 * 
+	  * @Method Name : nowYYYYMMDDHHmmss
+	  * @작성일 : 2019. 10. 7.
+	  * @작성자 : deepplin
+	  * @변경이력 : 
+	  * @Method 설명 :
+	  * @param daySeq 년원일 구분자
+	  * @param dayTimeSeq 년월일 시간 사이 구분자
+	  * @param timeSeq 시분초 사이 구분자
+	  * @return
+	 */
+	private static String _nowYYYYMMDDHHmmss (String dateSeq, String dayTimeSeq ,String timeSeq) {
+
+		return _nowYYYYMMDDHHmm(dateSeq, dayTimeSeq , timeSeq) + timeSeq + nowss();
+	}
 
 	/**
 	 * 
@@ -115,14 +140,73 @@ public class DateUtil {
 	  * @param timeSeq 시분초 사이 구분자
 	  * @return
 	 */
-	private static String nowYYYYMMDDHHmm (String daySeq, String dayTimeSeq ,String timeSeq) {
+	private static String _nowYYYYMMDDHHmm (String daySeq, String dayTimeSeq ,String timeSeq) {
 		String now = nowYYYYMMDD( daySeq);		
-		String time = nowHHmm( timeSeq);
+		String time = _nowHHmm( timeSeq);
 		
 		return now + dayTimeSeq + time;
 	}
 
+	private static DateTimeFormatter makeDateTimeFormatterYYYYMMDD( String seq) {
+		
+		return DateTimeFormatter.ofPattern("yyyy"+seq+"MM"+seq+"dd");
+	}
 	
+	private static DateTimeFormatter makeDateTimeFormatterYYYYMMDDHHmm( String seq) {
+		
+		return DateTimeFormatter.ofPattern( "yyyy"+seq+"MM"+seq+"dd"+seq+"HH"+seq+"mm");
+	}
+	
+	/**
+	  * @Method Name : getMonthDays
+	  * @작성일 : 2019. 12. 2.
+	  * @작성자 : deepplin
+	  * @변경이력 : 
+	  * @Method 설명 :
+	  * @param date
+	  * @param seq
+	  * @return
+	 */
+	private static Map<Integer, String> _getMonthDays( LocalDate date, String seq){
+		
+		LocalDate start = date.with( TemporalAdjusters.firstDayOfMonth());
+		LocalDate end  = date.with( TemporalAdjusters.lastDayOfMonth());
+		
+		return _makeDataMapFromStartToEnd( start, end, seq);
+
+	}
+	
+	/**
+	 * 
+	  * @Method Name : _makeDataMap
+	  * @작성일 : 2019. 12. 2.
+	  * @작성자 : deepplin
+	  * @변경이력 : 
+	  * @Method 설명 :
+	  * @param start
+	  * @param end
+	  * @param seq
+	  * @return
+	 */
+	private static Map<Integer, String> _makeDataMapFromStartToEnd(LocalDate start, LocalDate end, String seq){
+		
+		Long days = ChronoUnit.DAYS.between( start, end);
+		
+		Map<Integer, String> sb = new HashMap<Integer, String>();
+		
+		LocalDate keyDate = start;
+		
+		for (int i = 0; i <= days; i++) {
+			
+			String key = keyDate.toString().replace("-", "");
+			String value = keyDate.toString().replace("-", seq);
+			sb.put( Integer.parseInt( key),  value);
+			keyDate = keyDate.plusDays(1L);
+		}
+		return sb;
+	}
+	
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/**
@@ -135,7 +219,7 @@ public class DateUtil {
 	  * @return
 	  * @throws ExceptionBase
 	 */
-	public static LocalDate getLocalDateType( String yyyymmdd) throws ExceptionBase {
+	public static LocalDate getLocalDateFromString( String yyyymmdd) throws ExceptionBase {
 		LocalDate date = null;
 		try {
 			date = LocalDate.of( 
@@ -165,7 +249,7 @@ public class DateUtil {
 	  * @return
 	  * @throws ExceptionBase
 	 */
-	public static LocalDateTime getLocalDateTime( String yyyymmddhhmm) throws ExceptionBase {
+	public static LocalDateTime getLocalDateTimeFromString( String yyyymmddhhmm) throws ExceptionBase {
 		LocalDateTime date = null;
 		try {
 			date = LocalDateTime.of( 
@@ -187,32 +271,6 @@ public class DateUtil {
 		return date;
 	}
 	
-	/**
-	 * 시,분 2자리수 
-	 * @return
-	 */
-	public static String nowHHmm( String seq) {
-		
-		return nowHH()+ seq + nowmm();
-	}
-
-	/**
-	 * 
-	  * @Method Name : nowYYYYMMDDHHmmss
-	  * @작성일 : 2019. 10. 7.
-	  * @작성자 : deepplin
-	  * @변경이력 : 
-	  * @Method 설명 :
-	  * @param daySeq 년원일 구분자
-	  * @param dayTimeSeq 년월일 시간 사이 구분자
-	  * @param timeSeq 시분초 사이 구분자
-	  * @return
-	 */
-	private static String nowYYYYMMDDHHmmss (String dateSeq, String dayTimeSeq ,String timeSeq) {
-
-		return nowYYYYMMDDHHmm(dateSeq, dayTimeSeq , timeSeq) + timeSeq + nowss();
-	}
-
 	/**
 	 * DB에 저장할 생성일
 	 * @return
@@ -258,11 +316,11 @@ public class DateUtil {
 		}
 		else if ( type == EnumDateType.YYYYMMDDHHmm){
 
-			return nowYYYYMMDDHHmm("" ,"" ,  "");
+			return _nowYYYYMMDDHHmm("" ,"" ,  "");
 		}
 		else if ( type == EnumDateType.YYYYMMDDHHmmss){
 
-			return nowYYYYMMDDHHmmss("" , "", "");
+			return _nowYYYYMMDDHHmmss("" , "", "");
 		}
 
 		return date;
@@ -304,11 +362,11 @@ public class DateUtil {
 		}
 		else if ( type == EnumDateType.YYYYMMDDHHmm){
 
-			return nowYYYYMMDDHHmm(daySeq, dayTimeSeq, timeSeq);
+			return _nowYYYYMMDDHHmm(daySeq, dayTimeSeq, timeSeq);
 		}
 		else if ( type == EnumDateType.YYYYMMDDHHmmss){
 
-			return nowYYYYMMDDHHmmss(daySeq, dayTimeSeq, timeSeq);
+			return _nowYYYYMMDDHHmmss(daySeq, dayTimeSeq, timeSeq);
 		}
 		else {
 			throw new ExceptionBase( EnumExceptionOthers.IllegalAccessException);
@@ -344,16 +402,16 @@ public class DateUtil {
 	  * @throws ParseException
 	  * @throws ExceptionBase
 	 */
-	public static String nextDate( String yyyymmdd, long addDay, String seq) throws ExceptionBase {
+	public static String getNextDate( String yyyymmdd, long addDay, String seq) throws ExceptionBase {
 		
 		if( yyyymmdd == null) {
 		
 			throw new ExceptionBase( EnumExceptionString.STRING_NULL);
 		}
 		
-		LocalDate date = getLocalDateType( yyyymmdd);
+		LocalDate date = getLocalDateFromString( yyyymmdd);
 		
-		return date.plusDays( addDay).format( DateTimeFormatter.ofPattern("yyyy"+seq+"MM"+seq+"dd"));
+		return date.plusDays( addDay).format( makeDateTimeFormatterYYYYMMDD(seq));
 	}
 
 
@@ -372,7 +430,7 @@ public class DateUtil {
 	 */
 	public static Map<Integer, String> getWeekDays( String yyyymmdd , long idx, String seq) throws ExceptionBase {
 
-		LocalDate date = getLocalDateType( yyyymmdd);
+		LocalDate date = getLocalDateFromString( yyyymmdd);
 		
 		date = date.plusWeeks( idx);
 		Map< Integer, String> result = new HashMap<Integer, String>();
@@ -388,9 +446,10 @@ public class DateUtil {
 		for (int i = index; i < (index+7); i++) {
 			
 			LocalDate newDate = date.plusDays(i);
-			result.put( Integer.parseInt( newDate.format( DateTimeFormatter.ofPattern("yyyyMMdd"))) , newDate.format( DateTimeFormatter.ofPattern("yyyy"+seq+"MM"+seq+"dd")));
+			result.put( Integer.parseInt( newDate.format(makeDateTimeFormatterYYYYMMDD(""))) , newDate.format( makeDateTimeFormatterYYYYMMDD(seq)));
 		}
 		
+		// 정렬해서 반환
 		return result;
 	}
 	
@@ -409,12 +468,12 @@ public class DateUtil {
 	 */
 	public static Map<Integer, String> getDay( String yyyymmdd , long index, String seq) throws ExceptionBase {
 		
-		LocalDate date = getLocalDateType( yyyymmdd);
+		LocalDate date = getLocalDateFromString( yyyymmdd);
 		
 		date = date.plusDays( index);
 		
 		Map< Integer, String> result = new HashMap<Integer, String>();
-		result.put( Integer.parseInt( date.format( DateTimeFormatter.ofPattern("yyyyMMdd"))) , date.format( DateTimeFormatter.ofPattern("yyyy"+seq+"MM"+seq+"dd")));
+		result.put( Integer.parseInt( date.format( makeDateTimeFormatterYYYYMMDD(""))) , date.format( makeDateTimeFormatterYYYYMMDD(seq)));
 		
 		return result;
 	}
@@ -430,14 +489,14 @@ public class DateUtil {
 	  * @return
 	  * @throws ExceptionBase
 	 */
-	public static EnumSizeCompare checkTimeOver( String yyyymmddhhmm, long howLongHour) throws ExceptionBase {
+	public static EnumSizeCompare compareTimeWithNow( String yyyymmddhhmm, long howLongHour) throws ExceptionBase {
 		
-		LocalDateTime date = getLocalDateTime( yyyymmddhhmm);
+		LocalDateTime date = getLocalDateTimeFromString( yyyymmddhhmm);
 		LocalDateTime now = LocalDateTime.now();
 		LocalDateTime datePlusOneDay = date.plusHours(howLongHour);
 		
-		long nowLong = Long.parseLong( now.format( DateTimeFormatter.ofPattern("yyyyMMddHHmm")));
-		long datePlusLong = Long.parseLong( datePlusOneDay.format( DateTimeFormatter.ofPattern("yyyyMMddHHmm")));
+		long nowLong = Long.parseLong( now.format( makeDateTimeFormatterYYYYMMDDHHmm("")));
+		long datePlusLong = Long.parseLong( datePlusOneDay.format( makeDateTimeFormatterYYYYMMDDHHmm("")));
 		
 		// 년월일시분 동일함
 		if( nowLong == datePlusLong) {
@@ -455,6 +514,8 @@ public class DateUtil {
 			return EnumSizeCompare.BIG;
 		}
 	}
+	
+	
 	/**
 	  * @Method Name : getWeekFirstDayAndLastDay
 	  * @작성일 : 2019. 10. 7.
@@ -468,7 +529,7 @@ public class DateUtil {
 	 */
 	public static String[] getWeekFirstDayAndLastDay( String yyyymmdd, String seq) throws ExceptionBase {
 		
-		LocalDate date = getLocalDateType( yyyymmdd);
+		LocalDate date = getLocalDateFromString( yyyymmdd);
 		DayOfWeek dayofWeek = date.getDayOfWeek();
 		
 		int index = dayofWeek.getValue() * -1;
@@ -477,8 +538,8 @@ public class DateUtil {
 		LocalDate end  = date.plusDays( index+6);
 		
 		String[] result = new String[2];
-		result[0] = start.format( DateTimeFormatter.ofPattern("yyyy"+seq+"MM"+seq+"dd"));
-		result[1] = end.format( DateTimeFormatter.ofPattern("yyyy"+seq+"MM"+seq+"dd"));
+		result[0] = start.format( makeDateTimeFormatterYYYYMMDD(seq));
+		result[1] = end.format( makeDateTimeFormatterYYYYMMDD(seq));
 		
 		return result;
 	}
@@ -491,23 +552,26 @@ public class DateUtil {
 	  * @변경이력 : 
 	  * @Method 설명 : 원하는 날짜만큰 리스트 가져오기
 	  * @param startDayYYYYmmdd
-	  * @param days
+	  * @param howLong
 	  * @param seq
 	  * @return
 	  * @throws ExceptionBase
 	 */
-	public static Map<Integer, String> getDateListForDays( String startDayYYYYmmdd, long days, String seq) throws ExceptionBase {
+	public static Map<Integer, String> getDaysForHowLongFromStartDay( String startDayYYYYmmdd, long howLong, String seq) throws ExceptionBase {
 		
-		LocalDate date = getLocalDateType(startDayYYYYmmdd);
+		LocalDate date = getLocalDateFromString(startDayYYYYmmdd);
 		
 		Map<Integer, String> result = new HashMap<Integer, String>();
 		
-		for (int i = 0 ; i < days; i++) {
-			result.put(i,  date.plusDays(i).format( DateTimeFormatter.ofPattern("yyyy"+seq+"MM"+seq+"dd")));
+		for (int i = 0 ; i < howLong; i++) {
+			
+			result.put(i,  date.plusDays(i).format( makeDateTimeFormatterYYYYMMDD(seq)));
 		}
 		
 		return result;
 	}
+	
+
 	
 	/**
 	  * @Method Name : getMonthDays
@@ -522,33 +586,26 @@ public class DateUtil {
 	 */
 	public static Map<Integer, String> getMonthDays( String yyyymmdd, String seq) throws ExceptionBase {
 		
-		LocalDate date = getLocalDateType( yyyymmdd);
+		LocalDate date = getLocalDateFromString( yyyymmdd);
 		
-		LocalDate start = date.with( TemporalAdjusters.firstDayOfMonth());
-		LocalDate end  = date.with( TemporalAdjusters.lastDayOfMonth());
-		
-		Map<Integer, String> sb = new HashMap<Integer, String>();
-		
-		Period p = start.until(end);
-		Integer endday = p.getDays();
-
-		int year = date.getYear();
-		int month = date.getMonthValue();
-		String monthStr = String.format("%02d", month);
-		
-		for (int i = 0; i < endday; i++) {
-		
-			String day = String.format("%02d", i+1);
-			String temp = "" + year + seq + monthStr + seq + day;
-			sb.put( Integer.parseInt( year + monthStr + day), temp);
-		}
-		
-		return sb;
+		return _getMonthDays(date, seq);
 	}
 	
-	public static Map<Integer, String> getMonthDays( String yyyymmdd, int index, String seq) throws ExceptionBase {
+	/**
+	  * @Method Name : getMonthDays
+	  * @작성일 : 2019. 12. 2.
+	  * @작성자 : deepplin
+	  * @변경이력 : 
+	  * @Method 설명 :
+	  * @param yyyymmdd
+	  * @param index
+	  * @param seq
+	  * @return
+	  * @throws ExceptionBase
+	 */
+	public static Map<Integer, String> getDaysForMonthByDay( String yyyymmdd, int index, String seq) throws ExceptionBase {
 		
-		LocalDate date = getLocalDateType( yyyymmdd + "01");
+		LocalDate date = getLocalDateFromString( yyyymmdd + "01");
 		
 		for (int i = 0; i < Math.abs(index); i++) {
 		
@@ -566,37 +623,93 @@ public class DateUtil {
 			}
 		}
 		
-		LocalDate start = date.with( TemporalAdjusters.firstDayOfMonth());
-		LocalDate end  = date.with( TemporalAdjusters.lastDayOfMonth());
+		return _getMonthDays(date, seq);
+	}
+	
+	/**
+	  * @Method Name : getDayFromToday
+	  * @작성일 : 2019. 12. 2.
+	  * @작성자 : deepplin
+	  * @변경이력 : 
+	  * @Method 설명 : 오늘을 기준으로 해서 과거의 원하는 날짜만큼 가져오기
+	  * @param yyyymmdd
+	  * @param howLong
+	  * @param seq
+	  * @param index: 
+	  * @return
+	  * @throws ExceptionBase
+	 */
+	public static Map<Integer, String> getPastDays( String yyyymmdd, long howLong, String seq, int index) throws ExceptionBase {
+		
+		LocalDate date = getLocalDateFromString(yyyymmdd);
+
+		long checkLong =  howLong - 1;
+		
+		LocalDate start = date.minusDays(checkLong + (howLong * (index*-1)));
 		
 		Map<Integer, String> sb = new HashMap<Integer, String>();
 		
-		Period p = start.until(end);
-		Integer endday = p.getDays();
+		LocalDate keyDate = start;
 		
-		int year = date.getYear();
-		int month = date.getMonthValue();
-		String monthStr = String.format("%02d", month);
-		
-		for (int i = 0; i <= endday; i++) {
+		int i = 0;
+		while( true) {
+					
+			String key = keyDate.toString().replace("-", "");
+			String value = keyDate.toString().replace("-", seq);
+			sb.put( Integer.parseInt( key),  value);
 			
-			String day = String.format("%02d", i+1);
-			String temp = "" + year + seq + monthStr + seq + day;
-			sb.put( Integer.parseInt( year + monthStr + day), temp);
+			if( i == checkLong) break;
+			
+			keyDate = keyDate.plusDays(1L);
+			i++;
 		}
 		
 		return sb;
 	}
+
+	/**
+	 * 
+	  * @Method Name : getNowDaysFromDate
+	  * @작성일 : 2019. 12. 2.
+	  * @작성자 : deepplin
+	  * @변경이력 : 
+	  * @Method 설명 :과거 특정날부터 오늘까지 날짜 가져오기
+	  * @param pastyyymmdd
+	  * @param seq
+	  * @return
+	  * @throws ExceptionBase
+	 */
+	public static Map<Integer, String> getDaysFromPastDayToNow( String pastyyymmdd, String seq) throws ExceptionBase {
+		
+		LocalDate start = getLocalDateFromString(pastyyymmdd);
+		LocalDate today = getLocalDateFromString( now(EnumDateType.YYYYMMDD));
+
+		return _makeDataMapFromStartToEnd(start, today, seq);
+	}
 	
+	
+	/**
+	  * @Method Name : getYearDays
+	  * @작성일 : 2019. 12. 2.
+	  * @작성자 : deepplin
+	  * @변경이력 : 
+	  * @Method 설명 :
+	  * @param yyyy
+	  * @param index
+	  * @param seq
+	  * @return
+	  * @throws ExceptionBase
+	 */
 	public static Map<Integer, String> getYearDays( String yyyy, int index , String seq) throws ExceptionBase {
 		
 		int yearI = Integer.parseInt(yyyy) + index;
 
 		Map<Integer, String> sb = new HashMap<Integer, String>();
+		
 		for (int i = 1; i < 13; i++) {
 		
 			String month = String.format("%02d", i);
-			Map<Integer, String> t = getMonthDays( yearI + month + "01", 0, seq);
+			Map<Integer, String> t = getDaysForMonthByDay( yearI + month + "01", 0, seq);
 			sb.putAll(t);
 		}
 		
@@ -617,14 +730,14 @@ public class DateUtil {
 	 */
 	public static String[] getMonthFirstDayAndLastDay( String yyyymmdd, String seq) throws ExceptionBase {
 		
-		LocalDate date = getLocalDateType( yyyymmdd);
+		LocalDate date = getLocalDateFromString( yyyymmdd);
 		
 		LocalDate start = date.with( TemporalAdjusters.firstDayOfMonth());
 		LocalDate end  = date.with( TemporalAdjusters.lastDayOfMonth());
 		
 		String[] result = new String[2];
-		result[0] = start.format( DateTimeFormatter.ofPattern("yyyy"+seq+"MM"+seq+"dd"));
-		result[1] = end.format( DateTimeFormatter.ofPattern("yyyy"+seq+"MM"+seq+"dd"));
+		result[0] = start.format( makeDateTimeFormatterYYYYMMDD(seq));
+		result[1] = end.format( makeDateTimeFormatterYYYYMMDD(seq));
 		
 		return result;
 	}
@@ -651,7 +764,7 @@ public class DateUtil {
 		
 		if( dayType == EnumDayType.MONTH) {
 			
-			sb = getMonthDays(yyyymmdd, index, seq);
+			sb = getDaysForMonthByDay(yyyymmdd, index, seq);
 		}
 		else if( dayType == EnumDayType.WEEK) {
 			
@@ -740,11 +853,11 @@ public class DateUtil {
 	  * @return
 	  * @throws ParseException
 	 */
-	public static Long addDaysFromToday( int days ) throws ParseException {
+	public static long addDaysFromToday( int days ) throws ParseException {
 		
 		LocalDate now = LocalDate.now();
 		LocalDate nowPlus = now.plusDays( days);
-		return Long.parseLong( nowPlus.format( DateTimeFormatter.ofPattern("yyyyMMdd")));
+		return Long.parseLong( nowPlus.format( makeDateTimeFormatterYYYYMMDD("")));
 	}
 	
 	
@@ -818,7 +931,7 @@ public class DateUtil {
 	 * @throws ParseException
 	 * @throws ExceptionBase 
 	 */
-	public static Long  dateDifferenceByMinutes( String date, String date2) throws ParseException, ExceptionBase {
+	public static long  dateDifferenceByMinutes( String date, String date2) throws ParseException, ExceptionBase {
 
 		if( date == null || date2 == null) {
 			
@@ -898,15 +1011,19 @@ public class DateUtil {
 	 */
 	public static int dateDiffence( String date1, String date2) throws ExceptionBase {
 	
-		LocalDate date01 = getLocalDateType( date1);
-		LocalDate date02 = getLocalDateType( date2);
+		LocalDate date01 = getLocalDateFromString( date1);
+		LocalDate date02 = getLocalDateFromString( date2);
 		return Period.between(date01, date02).getDays();
 		
 	}
 	
 	public static void main(String[] args) throws ParseException, ExceptionBase {
 
-		System.out.println( dateDiffence("20191102", "20191101"));
+//		System.out.println(getDaysForMonthByDay("20191202" , 0, "").size());
+//		System.out.println( getDaysFromPastDayToNow("20191101",""));
+//		System.out.println( getPastDays("20191202", 7L, "", 1));
+		System.out.println( getWeekDays("20191126", 0, ""));
+//		System.out.println( dateDiffence("20191102", "20191101"));
 		
 //		System.out.println( checkTimeOver("201910301112", 24));
 		

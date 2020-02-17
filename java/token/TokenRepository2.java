@@ -1,7 +1,6 @@
 package com.chunlab.app.token;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 

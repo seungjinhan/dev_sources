@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 
 import org.json.JSONException;
-import com.chunlab.admin.system.json.JsonMap;
+import com.chunlab.app.system.json.JsonMap;
 
 import com.chunlab.app.system.enums.EnumExceptionOthers;
 import com.chunlab.app.system.exception.ExceptionBase;

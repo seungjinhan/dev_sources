@@ -25,7 +25,9 @@ public class LogUtil {
 	}
 	
 	public static void logError( Logger log, String msg) {
+		log.error( "========================================================");
 		log.error( msg);
+		log.error( "========================================================");
 	}
 	
 	public static void logDebug(  String msg) {

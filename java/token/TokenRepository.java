@@ -5,9 +5,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.chunlab.app.system.repository.BaseRepository;
 
 /**
  * 
@@ -19,11 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
   * @프로그램 설명 :
  */
 @Transactional
-public interface TokenRepository extends PagingAndSortingRepository<TokenVo, Long> {
+public interface TokenRepository extends BaseRepository<TokenVo, Long> {
 	
-	Optional< TokenVo> findByNo( Long no);
-	
-	Optional< List< TokenVo>> findByNoGreaterThanEqual( Long no);
+	Optional< List< TokenVo>> findByNoGreaterThanEqual( long no);
 	
 	// 앱키로 조회
 	Optional< TokenVo> findByAppDeviceNo( Long appDeviceNo);

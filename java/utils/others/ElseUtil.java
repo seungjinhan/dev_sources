@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.chunlab.admin.system.json.JsonList;
-import com.chunlab.admin.system.json.JsonMap;
+import com.chunlab.app.system.json.JsonList;
+import com.chunlab.app.system.json.JsonMap;
 
 import com.chunlab.app.auth_code.EnumCodeType;
 import com.chunlab.app.system.SystemPropertiesInfo;

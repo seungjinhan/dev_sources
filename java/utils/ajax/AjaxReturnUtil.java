@@ -2,12 +2,14 @@ package com.chunlab.app.utils.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.chunlab.admin.system.json.JsonMap;
+import com.chunlab.app.system.json.JsonMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,6 +74,26 @@ public class AjaxReturnUtil {
 		result.put(AjaxConstants.MESSAGE, AjaxConstants.DEFAULT_MESSAGE);
 
 		return result;
+	}
+	
+	/**
+	  * @Method Name : makeSuccess
+	  * @작성일 : 2019. 11. 21.
+	  * @작성자 : deepplin
+	  * @변경이력 : 
+	  * @Method 설명 : 반환값 여러개로 받아서 LIST로 반환하기
+	  * @param data
+	  * @return
+	 */
+	public static Map< String, Object> makeSuccess( Object... data ){
+		
+		List<Object> result = new ArrayList<Object>();
+		
+		for (Object object : data) {
+			
+			result.add(object);
+		}
+		return makeSuccess( result);
 	}
 	
 	public static Map<String, Object> makeSuccessOnlyData ( Object data) {
@@ -340,9 +362,7 @@ public class AjaxReturnUtil {
 	 */
 	public static boolean makeAjaxFailInInterceptor ( HttpServletResponse response, EnumBase enumBase, Logger logger) throws IOException {
 
-		LogUtil.logError(LOG ,"========================================================");
 		LogUtil.logError(LOG ,"* Error : " + enumBase.getDesc() + " =======");
-		LogUtil.logError(LOG ,"========================================================");
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=UTF-8");
@@ -410,7 +430,7 @@ public class AjaxReturnUtil {
 		
 		LogUtil.logError(LOG, e.toString());
 		e.printStackTrace();
-		return makeFail(e.getCode(), e.getDesc() ,e.getData());
+		return makeFail(e.getCode(), e.getData());
 	}
 
 }

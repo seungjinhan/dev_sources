@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.chunlab.admin.system.json.JsonList;
 import org.json.JSONException;
-import com.chunlab.admin.system.json.JsonMap;
 
+import com.chunlab.app.system.enums.EnumExceptionOthers;
 import com.chunlab.app.system.exception.ExceptionBase;
+import com.chunlab.app.system.json.JsonList;
+import com.chunlab.app.system.json.JsonMap;
 import com.chunlab.app.utils.enums.EnumExceptionObject;
 import com.chunlab.app.utils.enums.EnumSortType;
 import com.chunlab.app.utils.string.enums.EnumExceptionString;
@@ -49,6 +50,31 @@ public class JSONUtil {
 		}
 		
 		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> jsonArryToList2( JsonList jsonArr) throws ExceptionBase{
+		
+		if( jsonArr == null) {
+			
+			throw new ExceptionBase( EnumExceptionObject.OBJECT_NULL);
+		}
+		try {
+
+			List<T> result = new ArrayList<T>();
+			
+			for (int i = 0; i < jsonArr.length(); i++) {
+				
+				result.add( (T)jsonArr.get(i));
+			}
+			
+			return result;
+		}
+		catch( JSONException e) {
+			
+			throw new ExceptionBase( EnumExceptionOthers.JSONException);
+		}
+
 	}
 	
 	/**
@@ -198,7 +224,7 @@ public class JSONUtil {
 		List<JsonMap> jsonValues = new ArrayList<JsonMap>();
 		for (int i = 0; i < data.length(); i++){
 
-			jsonValues.add(data.getJSONObject(i));
+			jsonValues.add(data.getJsonMap(i));
 		}
 
 		Collections.sort(jsonValues, new Comparator<JsonMap>() {

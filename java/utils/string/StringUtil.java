@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import com.chunlab.admin.system.json.JsonList;
+import org.apache.commons.lang3.StringUtils;
+
+import com.chunlab.app.system.json.JsonList;
 
 import com.chunlab.app.system.enums.EnumYN;
 import com.chunlab.app.system.exception.ExceptionBase;
@@ -105,18 +107,22 @@ public class StringUtil {
 	 * 
 	 * @param str
 	 * 
-	 * @retur: 공백이면 true, 공백이 아니면 false
-	 *  
-	 * @throws ExceptionBase : null일 경우 발생
+	 * @retur: null 이거나 공백이면 true, 공백이 아니면 false
 	 */
 	public static boolean isEmpty ( String str) throws ExceptionBase {
-
-		if ( str == null){
-
-			throw new ExceptionBase( EnumExceptionString.STRING_NULL);
-		}
-		
-		return str.length() == 0?true:false;
+		return str == null || str.length() == 0 ? true : false;
+	}
+	
+	public static boolean isNotEmpty ( String str) throws ExceptionBase {
+		return !isEmpty(str);
+	}
+	
+	public static boolean isNull ( String str) throws ExceptionBase {
+		return str == null;
+	}
+	
+	public static boolean isNotNull ( String str) throws ExceptionBase {
+		return !isNull(str);
 	}
 
 	/**
@@ -170,7 +176,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * 스트링을 Long List로 변경
+	 * 스트링을 long List로 변경
 	 * @param str
 	 * @param delim
 	 * @return
@@ -342,5 +348,6 @@ public class StringUtil {
 		String makeString = str1 + "," + str2 + ",";
 		return makeString;
 	}
+	
 	
 }

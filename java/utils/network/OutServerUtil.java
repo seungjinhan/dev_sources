@@ -7,7 +7,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.chunlab.admin.system.json.JsonMap;
+import com.chunlab.app.system.json.JsonMap;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.converter.FormHttpMessageConverter;

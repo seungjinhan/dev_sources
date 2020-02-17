@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chunlab.app.system.exception.ExceptionBase;
+import com.chunlab.app.system.json.JsonMap;
 import com.chunlab.app.token.engine.TokenCache;
 import com.chunlab.app.user.UserService;
 import com.chunlab.app.user.UserVo;
+import com.chunlab.app.utils.string.StringUtil;
 
 /**
  * 
@@ -90,8 +92,15 @@ public class TokenService {
 		// refresh/ access token 재생성
 		TokenVo newVo= this.makeNewRefreshTokenAndAccessToken( vo.getEmail());
 		
-		UserVo userVo = userService.findByEmail( vo.getEmail());
+		UserVo userVo = userService.findByAllEmail( vo.getEmail());
 		userVo.setTokenInfo( Optional.ofNullable( newVo));
+		
+		String oldUserInfoString = userVo.getUserInfo();
+		if( StringUtil.isEmpty(oldUserInfoString)) {
+			oldUserInfoString = "{}";
+		}
+		userVo.setAdditionalInfo(new JsonMap(oldUserInfoString).toMap());
+		userVo.setUserInfo(null);
 		
 		return userVo;
 	}
@@ -156,7 +165,7 @@ public class TokenService {
 		return newVo;
 		
 	}
-//	public TokenVo makeNewRefreshTokenAndAccessToken(  String email, Long appDeviceNo) throws ExceptionBase {
+//	public TokenVo makeNewRefreshTokenAndAccessToken(  String email, long appDeviceNo) throws ExceptionBase {
 //		
 //		Optional<TokenVo> voOption = this.tokenRepository.findByEmail(email);
 //		
@@ -230,7 +239,7 @@ public class TokenService {
 	 * @return
 	 * @throws ExceptionBase 
 	 */
-	public TokenVo findByAppDeviceNo( Long appDeviceNo) throws ExceptionBase {
+	public TokenVo findByAppDeviceNo( long appDeviceNo) throws ExceptionBase {
 		
 		Optional< TokenVo> vo = this.tokenRepository.findByAppDeviceNo(appDeviceNo);
 		
@@ -254,5 +263,63 @@ public class TokenService {
 		
 		// 해당 앱키 데이터가 없음 -> 로그인 요청을 해야 함
 		return vo.orElseThrow( () -> new ExceptionBase( EnumExceptionToken.NOT_EXIST_APPKEY, email));
+	}
+	
+	/**
+	 * WEB용 토큰
+	 * RT/AT 있으면 기존꺼 그대로 주고
+	 * 없거나 만료 됐으면 새로 생성해서 준다
+	 * @param email
+	 * @작성자 : jiyeon
+	 * @return
+	 * @throws ExceptionBase 
+	 */
+	public TokenVo getRefreshTokenAndAccessToken( String email) throws ExceptionBase {
+		
+		Optional<TokenVo> voOption = this.tokenRepository.findByEmail(email);
+		
+		// 있으면 꺼내서 주고
+		// 없거나 만료 됐으면 새로 생성해서 준다
+		
+		TokenVo vo = null;
+		
+		// 토큰 데이터가 없다면 최초 생성
+		if( voOption.isPresent() == false) {
+
+			vo = new TokenVo();
+			vo.setEmail(email);
+		
+			// 새 Access / Refresh Token 생성
+			vo = this.tokenBox.makeNewRefreshAndAccessToken( vo);
+			// 생성
+			this.tokenRepository.save(vo);
+		}
+		else {
+			
+			// 이미 있으면 토큰데이터를 가져옴
+			vo = voOption.get();
+			
+			// RT 토큰 만료됐으면 각각 생성
+			boolean isRefeshTokenAvailable = this.tokenBox.isAvailableRefreshToken(vo.getRefreshToken());
+			if( isRefeshTokenAvailable == false) {
+				vo =  this.tokenBox.makeNewRefreshToken(vo);
+			}
+			
+			// AT 토큰 만료됐으면 각각 생성
+			boolean isAccessTokenAvailable = this.tokenBox.isAvailableAccessToken(vo.getAccessToken());
+			if( isAccessTokenAvailable == false ) {
+				vo =  this.tokenBox.makeNewAccessToken(vo);
+			} else {
+				String accessToken = this.tokenBox.getAccessTokenByEmail( vo.getEmail());
+				vo.setAccessToken( accessToken);
+				vo.setAccessTokenExpire( String.valueOf( this.tokenBox.getAccessTokenExpire(accessToken)));
+			}
+		}
+		
+		// Refresh/Access Token 캐쉬에 저장
+		this.tokenBox.putCacheTokenInfo(vo, vo.getRefreshToken());
+		
+		return vo;
+		
 	}
 }

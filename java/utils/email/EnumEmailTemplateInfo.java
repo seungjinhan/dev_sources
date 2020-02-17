@@ -30,7 +30,7 @@ public enum EnumEmailTemplateInfo  {
 	
 	public String getSubject() {
 		
-		return "[스마일바이오미]" + this.subject;
+		return "[블루바나나]" + this.subject;
 	}
 	
 	public String getFileName() {

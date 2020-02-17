@@ -1,4 +1,4 @@
-package com.chunlab.app.utils.security;
+package com.chunlab.app.utils.security.sha;
 
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

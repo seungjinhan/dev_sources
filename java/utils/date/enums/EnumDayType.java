@@ -14,9 +14,10 @@ import com.chunlab.app.system.enums.base.EnumBase;
 public enum EnumDayType  implements EnumBase{
 
 
+	CUSTOM				("CUSTOM", "CUSTOM"), 
 	YEAR				("YEAR"	, "년"), 
 	DAY					("DAY"	, "일"), 
-	MONTH				("MONTH"	, "월"), 
+	MONTH				("MONTH", "월"), 
 	WEEK				("WEEK"	, "주"); 
 
 

@@ -3,7 +3,7 @@ package com.chunlab.app.utils.network;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.chunlab.admin.system.json.JsonMap;
+import com.chunlab.app.system.json.JsonMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;

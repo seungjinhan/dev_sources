@@ -3,7 +3,7 @@ package com.chunlab.app.token.engine;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 
-import com.chunlab.admin.system.json.JsonMap;
+import com.chunlab.app.system.json.JsonMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +36,7 @@ public class TokenEngine extends TokenEngingSupport {
       * @return
       * @throws ExceptionBase
      */
-    public static Long makeAccessTokenExpire() throws ExceptionBase {
+    public static long makeAccessTokenExpire() throws ExceptionBase {
     	
     	try {
     		
@@ -162,16 +162,16 @@ public class TokenEngine extends TokenEngingSupport {
       * @return
       * @throws UnsupportedEncodingException
      */
-    public static String encode( TokenCoreData msg, Long cDate) throws UnsupportedEncodingException {
+    public static String encode( TokenCoreData msg, long cDate) throws UnsupportedEncodingException {
         
-        Long a1 = msg.createDate;// getLong("create");
+        long a1 = msg.createDate;// getLong("create");
         String a2 = msg.data.replace('{', '(').replace('}', ')');
-        Long a3 = msg.expire;
+        long a3 = msg.expire;
         
         int sum = String.valueOf(cDate).chars().distinct().sum();
         
-        Long token1 = a1*sum;
-        Long token3 = a3*sum*2;
+        long token1 = a1*sum;
+        long token3 = a3*sum*2;
         
         int machingIndex = ElseUtil.getRandomNumber(9);
         
@@ -447,7 +447,7 @@ public class TokenEngine extends TokenEngingSupport {
       * @param accessExpire
       * @return
      */
-    public static boolean isAvailableAccessToken( Long accessExpire) {
+    public static boolean isAvailableAccessToken( long accessExpire) {
     		
 		Long now = Long.parseLong( DateUtil.now( EnumDateType.YYYYMMDDHHmm));
 		
@@ -474,7 +474,7 @@ public class TokenEngine extends TokenEngingSupport {
       * @param refreshExpire
       * @return
      */
-    public static boolean isAvailableRefreshToken( Long refreshExpire) {
+    public static boolean isAvailableRefreshToken( long refreshExpire) {
     	
     	Long now = Long.parseLong( DateUtil.now( EnumDateType.YYYYMMDD));
     	
@@ -503,16 +503,16 @@ public class TokenEngine extends TokenEngingSupport {
      */
     static class TokenCoreData{
     	
-    	public Long createDate;
+    	public long createDate;
     	public String data;
-    	public Long expire;
+    	public long expire;
     	
     	
 		public TokenCoreData() {
 			super();
 		}
 
-		public TokenCoreData(Long createDate, String data, Long expire) {
+		public TokenCoreData(Long createDate, String data, long expire) {
 			super();
 			this.createDate = createDate;
 			this.data = data;
@@ -532,9 +532,9 @@ public class TokenEngine extends TokenEngingSupport {
      */
     static class TokenObjectInfo{
     	public String token;
-    	public Long expire;
+    	public long expire;
     	public String email;
-		public TokenObjectInfo(String token, Long expire, String email) {
+		public TokenObjectInfo(String token, long expire, String email) {
 			super();
 			this.token = token;
 			this.expire = expire;

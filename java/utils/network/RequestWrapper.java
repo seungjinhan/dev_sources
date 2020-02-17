@@ -14,8 +14,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.chunlab.admin.system.json.JsonList;
-import com.chunlab.admin.system.json.JsonMap;
+import com.chunlab.app.system.json.JsonList;
+import com.chunlab.app.system.json.JsonMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

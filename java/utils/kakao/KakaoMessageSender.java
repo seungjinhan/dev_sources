@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.chunlab.admin.system.json.JsonList;
-import com.chunlab.admin.system.json.JsonMap;
+import com.chunlab.app.system.json.JsonList;
+import com.chunlab.app.system.json.JsonMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +28,7 @@ import com.chunlab.app.utils.network.enums.EnumHttpResponseCode;
 @Component
 public class KakaoMessageSender {
 
-	private final String URL = "";
+	private final String URL = "https://alimtalk-api.bizmsg.kr/v1/sender/send";
 	
 	@Autowired(required=true)
 	private HttpServletRequest request;
@@ -48,7 +48,7 @@ public class KakaoMessageSender {
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
 		obj.put("phn", phone);
-		obj.put("profile", "");
+		obj.put("profile", "e79716d2ece4b66f192562ce4781c95d1428826d");
 		obj.put("message_type", "at");
 		
 		JsonMap buttonObj= new JsonMap();
@@ -60,7 +60,7 @@ public class KakaoMessageSender {
 		
 		obj.put("smsKind","L"); // SMS/LMS 구분(SMS: S, LMS: L)
 		obj.put("msgSms",msg);  // LMS 전환발송을 위한 메시지
-		obj.put("smsSender",""); // SMS 전환발송 시 발신번호
+		obj.put("smsSender","070-4350-6191"); // SMS 전환발송 시 발신번호
 		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
@@ -84,7 +84,7 @@ public class KakaoMessageSender {
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
 		obj.put("phn", phone);
-		obj.put("profile", "");
+		obj.put("profile", "e79716d2ece4b66f192562ce4781c95d1428826d");
 		obj.put("message_type", "at");
 		
 		JsonMap buttonObj= new JsonMap();
@@ -95,7 +95,7 @@ public class KakaoMessageSender {
 		
 		obj.put("smsKind","L"); // SMS/LMS 구분(SMS: S, LMS: L)
 		obj.put("msgSms",msg);  // LMS 전환발송을 위한 메시지
-		obj.put("smsSender",""); // SMS 전환발송 시 발신번호
+		obj.put("smsSender","070-4350-6191"); // SMS 전환발송 시 발신번호
 		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
@@ -112,12 +112,12 @@ public class KakaoMessageSender {
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
 		obj.put("phn", phone);
-		obj.put("profile", "");
+		obj.put("profile", "e79716d2ece4b66f192562ce4781c95d1428826d");
 		obj.put("message_type", "at");
 		
 		obj.put("smsKind","L"); // SMS/LMS 구분(SMS: S, LMS: L)
 		obj.put("msgSms",msg);  // LMS 전환발송을 위한 메시지
-		obj.put("smsSender",""); // SMS 전환발송 시 발신번호
+		obj.put("smsSender","070-4350-6191"); // SMS 전환발송 시 발신번호
 		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
@@ -188,12 +188,12 @@ public class KakaoMessageSender {
 		obj.put("tmplId", tmpId);
 		obj.put("msg", msg);
 		obj.put("phn", phone);
-		obj.put("profile", "");
+		obj.put("profile", "e79716d2ece4b66f192562ce4781c95d1428826d");
 		obj.put("message_type", "at");
 		
 		obj.put("smsKind","L"); // SMS/LMS 구분(SMS: S, LMS: L)
 		obj.put("msgSms",msg);  // LMS 전환발송을 위한 메시지
-		obj.put("smsSender",""); // SMS 전환발송 시 발신번호
+		obj.put("smsSender","070-4350-6191"); // SMS 전환발송 시 발신번호
 		obj.put("smsLmsTit","스마일바이오미"); // LMS 발송 제목
 		obj.put("smsOnly","N");
 		
@@ -227,7 +227,7 @@ public class KakaoMessageSender {
 			
 			throw new ExceptionBase(EnumHttpResponseCode.HTTP_ELSE, result);
 		}
-		JsonMap tmpObj = jsonArray.getJSONObject(0);
+		JsonMap tmpObj = jsonArray.getJsonMap(0);
 		
 		return tmpObj;
 

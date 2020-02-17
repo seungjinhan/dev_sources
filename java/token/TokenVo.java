@@ -34,12 +34,12 @@ public class TokenVo extends BaseVo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "no", nullable = false, unique = true, length = 20)
-	private Long no;
+	private long no;
 
 	/**
 	 * app device no
 	 */
-	@Column(name = "app_device_no", nullable = true, unique = false, length = 10)
+	@Column(name = "app_device_no", nullable = true, unique = false, length = 20)
 	private Long appDeviceNo;
 	
 	/**
